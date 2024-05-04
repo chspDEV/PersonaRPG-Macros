@@ -1,0 +1,27 @@
+-- RDR, Macro em Lua para Firecast.
+-- Feito por chspDEV
+
+dados = {}
+tipodado = {}
+bonus = 0
+resultadototal = 0
+terminei = false
+
+function checagem()
+    local _rolagem = tostring(tipodado[1])
+    resultado1 = roll(_rolagem, "Soma")
+    resultado2 = roll(_rolagem, "Subtrai")
+    resultadototal = (bonus + resultado1) - resultado2
+	_resultadototal = tostring(bonus) .. " + " .. tostring(resultado1) .. " - " .. tostring(resultado2)
+    send("Resultado Final: " .. resultadototal .. " (" .. _resultadototal .. ")")
+end
+
+function rolagemdano()
+    bonus = inputQuery("Valor do Atributo Base")
+    local _, recebertipodado = choose("Escolha o tipo de Dado para arriscar", {"d4", "d6"})
+    table.insert(tipodado, recebertipodado)
+
+    checagem()
+end
+
+rolagemdano()

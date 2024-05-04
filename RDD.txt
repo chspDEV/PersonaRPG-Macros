@@ -1,0 +1,39 @@
+-- RDD, Macro em Lua para Firecast.
+-- Feito por chspDEV
+
+index = 0
+dados = {}
+tipodado = {}
+tipodano = {}
+bonus = {}
+resultadototal = 0
+terminei = false
+
+function checagem()
+        for i = 1, index, 1 do
+            local _rolagem = dados[i] .. tostring(tipodado[i])
+	    local _tipodano = tostring(tipodano[i])
+	    local _bonus = tostring(bonus[i])
+            resultado = roll(_rolagem .. "+" .. _bonus, "[§B][§K8]" .. _tipodano)
+	    resultadototal = resultadototal + resultado
+        end
+    send("Resultado total: " .. resultadototal)
+end
+
+
+function rolagemdano()
+    local receberquantiadados = inputQuery("Quantidade de Dados")
+    local _, recebertipodado = choose("Escolha o tipo de Dado", {"d4", "d6", "d8", "d10", "d12", "d20", "d100"})
+    local _, recebertipodano = choose("Escolha o tipo de Dano", {"Físico", "Fogo", "Gelo", "Vento", "Raio", "Nuclear", "Psicocinese", "Luz", "Trevas", "Onipotente", "Cura"})
+    local receberbonus = inputQuery("Bonus dessa rolagem")
+    index = index + 1
+
+    table.insert(dados, receberquantiadados)
+    table.insert(tipodado, recebertipodado)
+    table.insert(tipodano, recebertipodano)
+    table.insert(bonus, receberbonus)
+
+    checagem()
+end
+
+rolagemdano()
